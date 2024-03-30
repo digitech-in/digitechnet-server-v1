@@ -5,7 +5,7 @@ package com.mc.digitechin.digitechin.domain.User;
  * 해당 패키지는 유저 데이터들을 등록, 수정, 관리하기 위한 컨트롤러와 DTO, 서비스, 레포지토리 등을 하위 패키지로 가지고 있습니다.
  * </p>
  *
- * @since 1.0
+ * @since 1.0.0
  * @author yunjisang
- * @version 1.0
+ * @version 1.0.0
  */
