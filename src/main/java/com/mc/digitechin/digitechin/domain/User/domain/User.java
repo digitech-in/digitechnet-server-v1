@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.mc.digitechin.digitechin.domain.User.constants.UserRole;
+import com.mc.digitechin.digitechin.domain.User.constants.UserRoleConverter;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -32,7 +33,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     // == 유저 기본 정보 ==
     // id, 이름, 학교 이메일, 역할, 비밀번호, 생성일, 생일
@@ -53,7 +54,7 @@ public class User {
     private LocalDateTime birthDate;
 
     @NotNull
-    @Convert(converter = UserRole.class)
+    @Convert(converter = UserRoleConverter.class)
     private UserRole userRole;
 
     @NotNull

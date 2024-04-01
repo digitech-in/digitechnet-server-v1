@@ -16,6 +16,7 @@ public enum UserRole {
     TEACHER(300, "교사");
 
     private int codeValue;
+
     private String role;
 
     UserRole(int codeValue, String role) {
