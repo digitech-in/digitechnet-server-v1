@@ -28,9 +28,9 @@ import lombok.NoArgsConstructor;
  * @version 1.0.0
  * @Todos : 교사 정보, 팔로워/팔로잉 유저
  */
+@Getter
 @Entity
 @Builder
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -63,9 +63,6 @@ public class User {
 
     @CreatedDate
     private LocalDateTime createdAt;
-
-    // === 학생 정보 ==
-    // 학년, 반, 번호
     @Column
     private Integer grade;
 
@@ -74,12 +71,6 @@ public class User {
 
     @Column
     private Integer classNumber;
-
-    // == 메소드 정의 ==
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public void setGrade(int grade) {
         this.grade = grade;
@@ -91,5 +82,9 @@ public class User {
 
     public void setClassNumber(int classNumber) {
         this.classNumber = classNumber;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

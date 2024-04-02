@@ -1,18 +1,27 @@
 package com.mc.digitechin.digitechin.domain.User.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import java.util.List;
 
-import com.mc.digitechin.digitechin.domain.User.dto.Student;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+
+import com.mc.digitechin.digitechin.domain.User.domain.User;
+import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO;
+import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO.StudentInfoResponseDTO;
 import com.mc.digitechin.digitechin.domain.User.dto.Teacher;
+import com.mc.digitechin.digitechin.global.common.SuccessResponse;
 
 public interface UserService {
     /**
      * 모든 학생 데이터를 페이징해 리턴
      *
+     * @Todo 필터링을 통한 검색
      * @return Page<Student>
+     * @throws NotFoundException
      */
-    public Page<Student> findAllStudent(Pageable pageable);
+    public SuccessResponse<List<StudentInfoResponseDTO>> findAllStudent(@PageableDefault(size = 10) Pageable pageable)
+            throws NotFoundException;
 
     /**
      * 입력된 이메일을 가지고 있는 학생 데이터를 리턴
@@ -20,7 +29,7 @@ public interface UserService {
      * @param email 사용자가 입력한 이메일
      * @return Student
      */
-    public Student findStudentByEmail(String email);
+    public User findStudentByEmail(String email);
 
     /**
      * 입력된 이름과 같은 학생 데이터를 리턴
@@ -28,7 +37,7 @@ public interface UserService {
      * @param name 사용자가 입력한 이름
      * @return Page<Student>
      */
-    public Page<Student> findStudentAllByName(String name, Pageable pageable);
+    public List<User> findStudentAllByName(String name, Pageable pageable);
 
     /**
      * 입력된 학년에 소속된 학생 데이터를 페이징해 리턴
@@ -36,7 +45,7 @@ public interface UserService {
      * @param grade 사용자가 입력한 학년
      * @return Page<Student>
      */
-    public Page<Student> findStudentAllByGrade(Integer grade, Pageable pageable);
+    public List<StudentDTO> findStudentAllByGrade(Integer grade, Pageable pageable);
 
     /**
      * 입력된 반에 소속된 학생 데이터를 페이징해 리턴
@@ -44,7 +53,7 @@ public interface UserService {
      * @param classroom 사용자가 입력한 반
      * @return Page<Student>
      */
-    public Page<Student> findStudentAllByClassroom(Integer classroom, Pageable pageable);
+    public List<StudentDTO> findStudentAllByClassroom(Integer classroom, Pageable pageable);
 
     /**
      * 데이터베이스에 저장된 유니크한 아이디를 통해 학생을 찾아 리턴
@@ -52,7 +61,7 @@ public interface UserService {
      * @param id 아이디
      * @return Student
      */
-    public Student findStudentById(Integer id);
+    public User findStudentById(Integer id);
 
     /**
      * 검색 시 입력된 키워드와 일치하는 학생 데이터를 찾아 리턴
@@ -60,7 +69,7 @@ public interface UserService {
      * @param keyword 입력된 키워드
      * @return Page<Student>
      */
-    public Page<Student> searchStudentByKeywords(String keyword);
+    public List<StudentDTO> searchStudentByKeywords(String keyword);
 
     /**
      * 학생 데이터 업데이트
@@ -68,9 +77,9 @@ public interface UserService {
      * @param email 토큰에서 추출한 이메일
      * @return Student 업데이트된 학생 데이터
      */
-    public Student updateStudentByEmail(String email);
+    public StudentDTO updateStudentByEmail(String email);
 
-    public Page<Teacher> findAllTeacher();
+    public List<Teacher> findAllTeacher();
 
     public Teacher findTeacherByName();
 
