@@ -2,6 +2,9 @@ package com.mc.digitechin.digitechin.domain.User.controller;
 
 import java.util.List;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -9,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.mc.digitechin.digitechin.domain.User.dto.BaseUser;
-import com.mc.digitechin.digitechin.domain.User.dto.Student;
+import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO.StudentInfoResponseDTO;
 import com.mc.digitechin.digitechin.domain.User.dto.Teacher;
 import com.mc.digitechin.digitechin.global.common.SuccessResponse;
 
@@ -27,9 +30,11 @@ public interface UserController {
      * 모든 학생들의 데이터를 리턴
      * 
      * @return ResponseEntity<SuccessResponse<List<Student.StudentInfoResponseDTO>>>
+     * @throws NotFoundException
      */
     @GetMapping("/students")
-    public ResponseEntity<SuccessResponse<List<Student.StudentInfoResponseDTO>>> getAllStudents();
+    public ResponseEntity<SuccessResponse<List<StudentInfoResponseDTO>>> getAllStudents(
+            @PageableDefault(size = 10) Pageable pageable) throws NotFoundException;
 
     /**
      * 모든 선생님들의 데이터를 리턴
