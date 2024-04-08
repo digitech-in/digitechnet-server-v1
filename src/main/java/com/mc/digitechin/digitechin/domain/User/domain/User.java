@@ -38,7 +38,7 @@ public class User {
     // == 유저 기본 정보 ==
     // id, 이름, 학교 이메일, 역할, 비밀번호, 생성일, 생일
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 

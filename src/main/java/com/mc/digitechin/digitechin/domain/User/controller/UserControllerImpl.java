@@ -2,7 +2,6 @@ package com.mc.digitechin.digitechin.domain.User.controller;
 
 import java.util.List;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 @RestController
 @RequiredArgsConstructor
 public class UserControllerImpl implements UserController {
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @Override
     public ResponseEntity<SuccessResponse<BaseUser>> getIdentity() {
@@ -37,7 +36,6 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public ResponseEntity<SuccessResponse<Void>> postSignIn() {
-        throw new UnsupportedOperationException("Unimplemented method 'postSignIn'");
     }
 
     @Override
@@ -66,9 +64,8 @@ public class UserControllerImpl implements UserController {
     }
 
     @Override
-    public ResponseEntity<SuccessResponse<List<StudentInfoResponseDTO>>> getAllStudents(Pageable pageable)
-            throws NotFoundException {
-        SuccessResponse<List<StudentInfoResponseDTO>> studentList = userService.findAllStudent(pageable);
+    public ResponseEntity<SuccessResponse<List<StudentInfoResponseDTO>>> getAllStudents(Pageable pageable) {
+        SuccessResponse<List<StudentInfoResponseDTO>> studentList = this.userService.findAllStudent(pageable);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("application", "json", StandardCharsets.UTF_8));
