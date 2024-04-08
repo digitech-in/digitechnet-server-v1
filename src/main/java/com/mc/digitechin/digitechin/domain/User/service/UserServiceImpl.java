@@ -1,6 +1,5 @@
 package com.mc.digitechin.digitechin.domain.User.service;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Pageable;
 
 import static java.util.stream.Collectors.toList;
@@ -18,14 +17,16 @@ import com.mc.digitechin.digitechin.global.error.CustomException;
 import com.mc.digitechin.digitechin.global.error.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public SuccessResponse<List<StudentInfoResponseDTO>> findAllStudent(Pageable pageable) throws NotFoundException {
-        List<User> students = userRepository.findAllByUserRole(UserRole.STUDENT, pageable)
+    public SuccessResponse<List<StudentInfoResponseDTO>> findAllStudent(Pageable pageable) {
+        List<User> students = userRepository.findAllByUserRole(UserRole.STUDENT.getCodeValue(), pageable)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         List<StudentInfoResponseDTO> response = students.stream()

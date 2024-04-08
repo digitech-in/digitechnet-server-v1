@@ -34,7 +34,7 @@ public interface UserController {
      */
     @GetMapping("/students")
     public ResponseEntity<SuccessResponse<List<StudentInfoResponseDTO>>> getAllStudents(
-            @PageableDefault(size = 10) Pageable pageable) throws NotFoundException;
+            @PageableDefault(size = 10) Pageable pageable);
 
     /**
      * 모든 선생님들의 데이터를 리턴
