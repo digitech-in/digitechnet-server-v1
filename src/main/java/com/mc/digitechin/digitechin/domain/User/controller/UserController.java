@@ -2,18 +2,16 @@ package com.mc.digitechin.digitechin.domain.User.controller;
 
 import java.util.List;
 
+import com.mc.digitechin.digitechin.domain.User.dto.TeacherDTO;
+import com.mc.digitechin.digitechin.domain.User.dto.UserDTO;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.mc.digitechin.digitechin.domain.User.dto.BaseUser;
 import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO.StudentInfoResponseDTO;
-import com.mc.digitechin.digitechin.domain.User.dto.Teacher;
 import com.mc.digitechin.digitechin.global.common.SuccessResponse;
 
 @RequestMapping(value = "/api/v1/user")
@@ -24,7 +22,7 @@ public interface UserController {
      * @return ResponseEntity<SuccessResponse<BaseUser.getUserDataResponseDTO>>
      */
     @GetMapping("/me")
-    public ResponseEntity<SuccessResponse<BaseUser>> getIdentity();
+    public ResponseEntity<SuccessResponse<BaseUser>> getProfile();
 
     /**
      * 모든 학생들의 데이터를 리턴
@@ -39,10 +37,10 @@ public interface UserController {
     /**
      * 모든 선생님들의 데이터를 리턴
      * 
-     * @return ResponseEntity<SuccessResponse<List<Teacher.TeacherInfoResponseDTO>>>
+     * @return ResponseEntity<SuccessResponse<List<TeacherDTO.TeacherInfoResponseDTO>>>
      */
     @GetMapping("/teachers")
-    public ResponseEntity<SuccessResponse<List<Teacher.TeacherInfoResponseDTO>>> getAllTeachers();
+    public ResponseEntity<SuccessResponse<List<TeacherDTO.TeacherInfoResponseDTO>>> getAllTeachers();
 
     /**
      * 로그인
@@ -50,7 +48,8 @@ public interface UserController {
      * @return ResponseEntity<SuccessResponse<Void>>
      */
     @PostMapping("/signin")
-    public ResponseEntity<SuccessResponse<Void>> postSignIn();
+    public ResponseEntity<SuccessResponse<UserDTO.UserLoginResponseDTO>> postSignIn(@RequestBody UserDTO.UserLoginRequestDTO userLoginRequestDTO);
+
 
     /**
      * 회원가입
@@ -58,7 +57,7 @@ public interface UserController {
      * @return ResponseEntity<SuccessResponse<Void>>
      */
     @PostMapping("/signup")
-    public ResponseEntity<SuccessResponse<Void>> postSignUp();
+    public ResponseEntity<SuccessResponse<UserDTO.UserJoinResponseDTO>> postSignUp(@RequestBody UserDTO.UserJoinRequestDTO userJoinRequestDTO);
 
     /**
      * 로그아웃

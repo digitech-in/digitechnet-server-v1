@@ -7,11 +7,27 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JwtTokenUtil {
+    public static String secretKey;
+
+    public static long expireTimeMs;
+
+    @Value("${jwts.secretKey}")
+    public void setSecretKey(String value) {
+        secretKey = value;
+    }
+
+    @Value("${jwts.expiredtime}")
+    public void setExpireTimeMs(long value) {
+        expireTimeMs = value;
+    }
 
     // JWT Token 발급
-    public static String createToken(String email, String secretKey, long expireTimeMs) {
+    public static String createToken(String email) {
         // Claim = Jwt Token에 들어갈 정보
         // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
         Claims claims = Jwts.claims();
