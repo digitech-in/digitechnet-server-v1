@@ -2,6 +2,8 @@ package com.mc.digitechin.digitechin.domain.User.service;
 
 import java.util.List;
 
+import com.mc.digitechin.digitechin.domain.User.dto.TeacherDTO;
+import com.mc.digitechin.digitechin.domain.User.dto.UserDTO;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -9,7 +11,6 @@ import org.springframework.data.web.PageableDefault;
 import com.mc.digitechin.digitechin.domain.User.domain.User;
 import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO;
 import com.mc.digitechin.digitechin.domain.User.dto.StudentDTO.StudentInfoResponseDTO;
-import com.mc.digitechin.digitechin.domain.User.dto.Teacher;
 import com.mc.digitechin.digitechin.global.common.SuccessResponse;
 
 public interface UserService {
@@ -22,6 +23,13 @@ public interface UserService {
      */
     public SuccessResponse<List<StudentInfoResponseDTO>> findAllStudent(@PageableDefault(size = 10) Pageable pageable)
             throws NotFoundException;
+
+    /**
+     * 유저를 DB에 등록하고 id, name, email을 SuccessResponse 객체에 담아 리턴
+     *
+     * @return SuccessResponse<UserDTO.UserJoinResponseDTO>
+     */
+    public SuccessResponse<UserDTO.UserJoinResponseDTO> createUser(UserDTO.UserJoinRequestDTO userJoinRequestDTO);
 
     /**
      * 입력된 이메일을 가지고 있는 학생 데이터를 리턴
@@ -79,9 +87,23 @@ public interface UserService {
      */
     public StudentDTO updateStudentByEmail(String email);
 
-    public List<Teacher> findAllTeacher();
+    public List<TeacherDTO> findAllTeacher();
 
-    public Teacher findTeacherByName();
+    public TeacherDTO findTeacherByName();
 
-    public Teacher findTeacherByEmail();
+    public TeacherDTO findTeacherByEmail();
+
+    /**
+     * 인자로 넘어온 이메일을 통해 유저를 검색한 후 토큰을 만들어 리턴
+     * @param userLoginRequestDTO
+     * @return SuccessResponse<UserDTO.UserLoginResponseDTO>
+     */
+    public SuccessResponse<UserDTO.UserLoginResponseDTO> createToken(UserDTO.UserLoginRequestDTO userLoginRequestDTO);
+
+    /**
+     * 인자로 넘어온 이메일을 통해 유저를 검색한 후 있다면 User, 없다면 null 반환
+     * @param email
+     * @return
+     */
+    public User findUserByEmail(String email);
 }
